@@ -1,0 +1,22 @@
+{
+    "success_code" : 200,
+    "error_code" : 401,
+    "server_error_code" : 500,
+    "page_not_found_code" : 404,
+    "error_status": "ERROR",
+    "success_status": "SUCCESS",
+    "error_occured": "Error occured!",
+    "something_went_wrong":"Something went wrong! Please try again later.",
+    "data_not_found": "Data not found.",
+    "data_found": "Data found.",
+    "required":"Please enter the required fields.",
+    "from_email":"",
+    "dbprefix" : "",
+    "site_url" : "",
+    "admin_url" : "",
+    "image_upload_path" : "",
+    "image_url" : "",
+    "image_extension" : ["png", "jpeg", "jpg"],
+    "attachment_extension" : ["png", "jpeg", "jpg", "svg", "xlsx", "xls", "csv", "pdf", "doc", "docx", "txt"],
+    "csv_extension" : ["csv"]
+}
