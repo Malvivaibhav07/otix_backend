@@ -30,7 +30,7 @@ function handleDisconnect() {
         console.log('db error', err);
         if (err.code === 'PROTOCOL_CONNECTION_LOST' || err.code === 'PROTOCOL_PACKETS_OUT_OF_ORDER') { // Connection to the MySQL server is usually
             handleDisconnect(); // lost due to either server restart, or a
-            const command = process.env.APP_ENV === 'production' ? 'pm2 restart tokenized-green-api-live' : 'pm2 restart tokenized-green-api-dev';
+            const command = process.env.APP_ENV === 'production' ? 'pm2 restart otix-api-live' : 'pm2 restart otix-api-dev';
             exec(command, (err, stdout, stderr) => {
                 if (err) {
                     console.error(`Error executing command: ${err}`);
