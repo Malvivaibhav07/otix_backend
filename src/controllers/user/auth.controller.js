@@ -28,8 +28,7 @@ module.exports.login = async function (req, res) {
     }
     else {
         const bodyData = req.body;
-        console.log("object")
-        
+              
        
         if (!bodyData || bodyData.length == 0) {
             return res.json({

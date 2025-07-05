@@ -10,7 +10,6 @@ function auth(req, res, next) {
     const lang = common.getLang(req);
 
     const accessToken = req.headers['authorization'];
-    console.log(accessToken)
     if (!accessToken) {
         return res.json({
             code: 403,
