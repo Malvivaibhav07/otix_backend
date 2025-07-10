@@ -145,7 +145,7 @@ module.exports.login = async function (req, res) {
                 } 
             
         } catch (error) {
-            console.error("Error : ", error);
+            console.error("Error in user login: ", error);
             
             return res.json({
                 code: configvar.error_code,
@@ -156,152 +156,152 @@ module.exports.login = async function (req, res) {
     }
 };
 
-module.exports.signup = async function (req, res) {
-    const lang = common.getLang(req);
+// module.exports.signup = async function (req, res) {
+//     const lang = common.getLang(req);
 
-    const validate = await authValidation.signup(req);
-    if(validate.code !== 200) {
-        return res.json({
-            code: validate.code,
-            status: validate.status,
-            message: validate.message
-        });
-    }
-    else {
-        const bodyData = req.body;
+//     const validate = await authValidation.signup(req);
+//     if(validate.code !== 200) {
+//         return res.json({
+//             code: validate.code,
+//             status: validate.status,
+//             message: validate.message
+//         });
+//     }
+//     else {
+//         const bodyData = req.body;
         
-        if (!bodyData || bodyData.length == 0) {
-            return res.json({
-                code: configvar.error_code,
-                status: configvar.error_status,
-                message: allLang[lang].data_not_found
-            });
-        }
+//         if (!bodyData || bodyData.length == 0) {
+//             return res.json({
+//                 code: configvar.error_code,
+//                 status: configvar.error_status,
+//                 message: allLang[lang].data_not_found
+//             });
+//         }
 
-        try {
+//         try {
      
-            let conditions = { email: bodyData.email };
-            let resultData = await queryService.getDataByConditionsOrderBy('users', conditions, 'u_id DESC');
+//             let conditions = { email: bodyData.email };
+//             let resultData = await queryService.getDataByConditionsOrderBy('users', conditions, 'u_id DESC');
 
-            if (resultData.length > 0 && resultData[0].deleted_at === null) {
-                return res.json({
-                    code: configvar.error_code,
-                    status: configvar.error_status,
-                    message: allLang[lang].email_already_registered
-                });
-            }
+//             if (resultData.length > 0 && resultData[0].deleted_at === null) {
+//                 return res.json({
+//                     code: configvar.error_code,
+//                     status: configvar.error_status,
+//                     message: allLang[lang].email_already_registered
+//                 });
+//             }
          
 
-            // Reactivate soft-deleted user
-            const previousUser = (resultData.length > 0 && resultData[0].deleted_at !== null) ? resultData[0] : null;
+//             // Reactivate soft-deleted user
+//             const previousUser = (resultData.length > 0 && resultData[0].deleted_at !== null) ? resultData[0] : null;
 
-            const hashedPassword = await bcrypt.hash(bodyData.password, saltRounds);
+//             const hashedPassword = await bcrypt.hash(bodyData.password, saltRounds);
 
-            const userCommonData = {
-                first_name: bodyData.first_name,
-                last_name: bodyData.last_name,
-                email: bodyData.email,
-                password: hashedPassword,
+//             const userCommonData = {
+//                 first_name: bodyData.first_name,
+//                 last_name: bodyData.last_name,
+//                 email: bodyData.email,
+//                 password: hashedPassword,
                 
-            };
+//             };
 
-            if (previousUser) {
+//             if (previousUser) {
                    
-                const updateData = {
-                    ...userCommonData,
-                    created_at: new Date(),
-                    deleted_at: null,
-                };
+//                 const updateData = {
+//                     ...userCommonData,
+//                     created_at: new Date(),
+//                     deleted_at: null,
+//                 };
 
-                const updatedData = await queryService.updateData('users', updateData, { u_id: previousUser.u_id });
+//                 const updatedData = await queryService.updateData('users', updateData, { u_id: previousUser.u_id });
                                 
-                if (updatedData !== 0) {
-                    return sendVerification(previousUser.u_id, bodyData, lang, res);
-                    return res.json({
-                        code: configvar.success_code,
-                        status: configvar.success_status,
-                        message: allLang[lang].registered_successfully,
-                    });
+//                 if (updatedData !== 0) {
+//                     return sendVerification(previousUser.u_id, bodyData, lang, res);
+//                     return res.json({
+//                         code: configvar.success_code,
+//                         status: configvar.success_status,
+//                         message: allLang[lang].registered_successfully,
+//                     });
 
-                } else {
-                    return res.json({
-                        code: configvar.error_code,
-                        status: configvar.error_status,
-                        message: allLang[lang].something_went_wrong,
-                    });
-                }
-            } else {
-                // New registration
-                const insertResult = await queryService.insertData('users', userCommonData);
-                if (insertResult.insertId !== 0) {
-                    return sendVerification(insertResult.insertId, bodyData, lang, res);
-                    return res.json({
-                        code: configvar.success_code,
-                        status: configvar.success_status,
-                        message: allLang[lang].registered_successfully,
-                    });
-                } else {
-                    return res.json({
-                        code: configvar.error_code,
-                        status: configvar.error_status,
-                        message: allLang[lang].something_went_wrong,
-                    });
-                }
-            }
-        } catch (error) {
-            console.error("Signup Error:", error);
-            return res.json({
-                code: configvar.error_code,
-                status: configvar.error_status,
-                message: allLang[lang].something_went_wrong,
-            });
-        }
-    };
+//                 } else {
+//                     return res.json({
+//                         code: configvar.error_code,
+//                         status: configvar.error_status,
+//                         message: allLang[lang].something_went_wrong,
+//                     });
+//                 }
+//             } else {
+//                 // New registration
+//                 const insertResult = await queryService.insertData('users', userCommonData);
+//                 if (insertResult.insertId !== 0) {
+//                     return sendVerification(insertResult.insertId, bodyData, lang, res);
+//                     return res.json({
+//                         code: configvar.success_code,
+//                         status: configvar.success_status,
+//                         message: allLang[lang].registered_successfully,
+//                     });
+//                 } else {
+//                     return res.json({
+//                         code: configvar.error_code,
+//                         status: configvar.error_status,
+//                         message: allLang[lang].something_went_wrong,
+//                     });
+//                 }
+//             }
+//         } catch (error) {
+//             console.error("Signup Error:", error);
+//             return res.json({
+//                 code: configvar.error_code,
+//                 status: configvar.error_status,
+//                 message: allLang[lang].something_went_wrong,
+//             });
+//         }
+//     };
 
-}
+// }
 
-async function sendVerification(userId, bodyData, lang, res) {
+// async function sendVerification(userId, bodyData, lang, res) {
     
-     // Generate OTP and save it in the database
-        const otp = Math.floor(100000 + Math.random() * 900000); // Generate a 6-digit OTP
-        // const otpExpiry = Date.now() + 10 * 60 * 1000; // OTP valid for 10 minutes
-        await queryService.updateData('users', { email_otp: otp }, { email: bodyData.email });
+//      // Generate OTP and save it in the database
+//         const otp = Math.floor(100000 + Math.random() * 900000); // Generate a 6-digit OTP
+//         // const otpExpiry = Date.now() + 10 * 60 * 1000; // OTP valid for 10 minutes
+//         await queryService.updateData('users', { email_otp: otp }, { email: bodyData.email });
 
-    const mailOptions = {
-        from: process.env.SMTP_AUTH_USER,
-            to: [bodyData.email],
-            subject: allLang[lang].verify_user_subject,
-            html: `
-                <div style="font-family: Arial, sans-serif; color: #333;">
-                    <h1>${allLang[lang].user_mail_l1} ${bodyData.first_name} ${bodyData.last_name}!</h1>
-                    <p>Thank you for registering with us! Please verify your email to complete your registration.</p>
-                    <p>Here is your OTP:</p>
-                    <h2>${otp}</h2>
-                    <p>This OTP is valid for 10 minutes. Please use it on the verification page to verify your account.</p>
-                    <p>If you did not register for this account, please ignore this email.</p>
-                    <br><br>Best Regards,<br>The Team Otix
-                </div>
-            `,
-    };
+//     const mailOptions = {
+//         from: process.env.SMTP_AUTH_USER,
+//             to: [bodyData.email],
+//             subject: allLang[lang].verify_user_subject,
+//             html: `
+//                 <div style="font-family: Arial, sans-serif; color: #333;">
+//                     <h1>${allLang[lang].user_mail_l1} ${bodyData.first_name} ${bodyData.last_name}!</h1>
+//                     <p>Thank you for registering with us! Please verify your email to complete your registration.</p>
+//                     <p>Here is your OTP:</p>
+//                     <h2>${otp}</h2>
+//                     <p>This OTP is valid for 10 minutes. Please use it on the verification page to verify your account.</p>
+//                     <p>If you did not register for this account, please ignore this email.</p>
+//                     <br><br>Best Regards,<br>The Team Otix
+//                 </div>
+//             `,
+//     };
 
-    // Send the email
-        sendMail.sendMail(mailOptions, (error, info) => {
-            if (error) {
-                console.error('Error sending email:', error);
-                return res.json({
-                    code: configvar.error_code,
-                    status: configvar.error_status,
-                    message: allLang[lang].something_went_wrong,
-                });
-            }
+//     // Send the email
+//         sendMail.sendMail(mailOptions, (error, info) => {
+//             if (error) {
+//                 console.error('Error sending email:', error);
+//                 return res.json({
+//                     code: configvar.error_code,
+//                     status: configvar.error_status,
+//                     message: allLang[lang].something_went_wrong,
+//                 });
+//             }
 
-            return res.json({
-                code: configvar.success_code,
-                status: configvar.success_status,
-                message: allLang[lang].verification_mail_sent,
-            });
-        });
-}
+//             return res.json({
+//                 code: configvar.success_code,
+//                 status: configvar.success_status,
+//                 message: allLang[lang].verification_mail_sent,
+//             });
+//         });
+// }
 
 
 module.exports.forgotPassword = async function (req, res) {

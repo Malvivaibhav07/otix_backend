@@ -1,16 +1,10 @@
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const saltRounds = 12;
-const { v4: uuidv4 } = require('uuid');
-const { exec } = require('child_process');
 const dotenv = require('dotenv');
 dotenv.config();
 const configvar = require('../../config/configvar');
 const common = require('../../utils/common');
 const allLang = require('../../languages/allLang');
 const { queryService} = require('../../services');
-const { productValidation} = require('../../validations/product');
-const sendMail = require('../../config/sendMail');
+const productValidation = require('../../validations/admin/product.validation');
 
 module.exports.addProduct = async function (req, res) {
     const lang = common.getLang(req);
@@ -28,10 +22,9 @@ module.exports.addProduct = async function (req, res) {
 
     try {
        
-        // Decrypt the request payload
         const bodyData = req.body;
 
-        // Check if product with same code already exists (example logic, you can change condition)
+        // Check if product with same code already exists
         const productExists = await queryService.getDataByConditions("products", {
             product_code: bodyData.product_code
         });

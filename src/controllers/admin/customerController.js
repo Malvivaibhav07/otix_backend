@@ -1,16 +1,10 @@
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const saltRounds = 12;
-const { v4: uuidv4 } = require('uuid');
-const { exec } = require('child_process');
 const dotenv = require('dotenv');
 dotenv.config();
 const configvar = require('../../config/configvar');
 const common = require('../../utils/common');
 const allLang = require('../../languages/allLang');
 const { queryService} = require('../../services');
-const { customerValidation} = require('../../validations/customer');
-const sendMail = require('../../config/sendMail');
+const  customerValidation = require('../../validations/admin/customer.validation');
 
 module.exports.addCustomer = async function (req, res) {
     const lang = common.getLang(req);

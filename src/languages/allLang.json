@@ -92,15 +92,15 @@
     "account_disabled":"Your account is disbled by admin",
     "no_tickets_found":"Not found any tickets",
     "tickets_fetched": "Tickets fetched successfully",
-    "disabled_account": "Your Peacockverse Account Has Been Disabled",
-    "enabled_account": "Your Peacockverse Account Has Been Enabled",
-    "user_added_by_admin":"You’ve Been Added to Peacockverse by an Admin",
-    "activated_account": "Your Peacockverse Account Has Been Activated",
+    "disabled_account": "Your Otix Account Has Been Disabled",
+    "enabled_account": "Your Otix Account Has Been Enabled",
+    "user_added_by_admin":"You’ve Been Added to Orix by an Admin",
+    "activated_account": "Your Otix Account Has Been Activated",
     "new_password_should_not_same_as_old": "New password cannot be the same as the old password.",
-    "organizer_added_by_admin":"You’ve Been Added as a Organizer to Peacockverse by an Admin",
+    "organizer_added_by_admin":"You’ve Been Added as a Organizer to Otix by an Admin",
 
-    "user_added_by_organizer":"You’ve Been Added to Peacockverse by an Organizer",
-    "staff_added_by_organizer":"You’ve Been Added as a staff to Peacockverse by an Organizer",
+    "user_added_by_organizer":"You’ve Been Added to Otix by an Organizer",
+    "staff_added_by_organizer":"You’ve Been Added as a staff to Otix by an Organizer",
     "no_organizer_found":"Organizer not found",
     "organizernot_found":"Organizer is not found",
     "otp_email_body_organizer": "Dear Organizer,<br>We received a request to reset your password.<br><br>Please use the OTP (One-Time Password) below to proceed with resetting your password:<br><br>Your OTP: ",
@@ -110,7 +110,15 @@
     "product_already_exists":"Product with this code already exists.",
     "must_be_number":"must be a number",
     "customer_created_success" : "Customer created successfully.",
-    "customer_creation_failed": "Failed to create customer."
+    "customer_creation_failed": "Failed to create customer.",
+    "finishing_already_exists":"Finishing with this name already exists.",
+    "finishing_creation_failed" : "Failed to create finishing.",
+    "finishing_created_success" : "Finishing created successfully.",
+    "finishing_update_failed" : "Failed to update finishing.",
+    "finishing_updated_success" : "Finishing updated successfully.",
+    "finishing_not_found" : " Finishing not found.",
+    "finishing_id_required" : "Finishing id is required.",
+    "finishing_deleted_successfully" : "Finishing deleted successfully."
 
   }
 }

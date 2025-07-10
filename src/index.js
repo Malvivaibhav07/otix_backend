@@ -20,10 +20,8 @@ app.get('/', (req, res) => {
 
 const userRoutes = require('./routes/v1/user');
 app.use('/v1/users', userRoutes);
-const productRoutes = require('./routes/v1/product');
-app.use('/v1/products', productRoutes);
-const customerRoutes = require('./routes/v1/customer');
-app.use('/v1/customers', customerRoutes);
+const adminRoutes = require('./routes/v1/admin');
+app.use('/v1/admin', adminRoutes);
 
 const PORT = process.env.APP_HTTP_PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
