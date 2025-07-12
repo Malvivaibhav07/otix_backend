@@ -109,7 +109,7 @@
     "product_created_success":"Product created successfully.",
     "product_already_exists":"Product with this code already exists.",
     "must_be_number":"must be a number",
-    "customer_created_success" : "Customer created successfully.",
+    "customer_created_success" : "Customer and products created successfully.",
     "customer_creation_failed": "Failed to create customer.",
     "finishing_already_exists":"Finishing with this name already exists.",
     "finishing_creation_failed" : "Failed to create finishing.",
@@ -118,7 +118,13 @@
     "finishing_updated_success" : "Finishing updated successfully.",
     "finishing_not_found" : " Finishing not found.",
     "finishing_id_required" : "Finishing id is required.",
-    "finishing_deleted_successfully" : "Finishing deleted successfully."
+    "finishing_deleted_successfully" : "Finishing deleted successfully.",
+    "no_customer_found" : "Customer not found ",
+    "customer_list_fetched" : "Customer list fetched successfully.",
+    "customer_fetched" : "Customer fetched successfully.",
+    "no_product_found" : "Products not found.",
+    "product_fetched" : "Products fetched successfully."
+
 
   }
 }

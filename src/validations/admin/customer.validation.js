@@ -12,7 +12,7 @@ module.exports.addCustomer = async function (req) {
         let validationErrors = [];
 
         const requiredFields = [
-            "cust_code", "cust_name", "comany_name", "PAN_no", "GST_no",
+            "cust_code", "cust_name", "comany_name", "GST_no",
             "cust_email", "cust_phone", "website_url", "address", "city",
             "state", "pincode", "country"
         ];

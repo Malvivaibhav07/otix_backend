@@ -87,18 +87,28 @@ module.exports.getDataByConditions = async function (tableName, conditions) {
 // };
 module.exports.getDataByConditionsOrderBy = async function (tableName, conditions, orderBy = '') {
     return new Promise(function (resolve, reject) {
-        let keys = Object.keys(conditions);
         let values = [];
+        let whereClause = '';
 
-        // Modify WHERE clause to handle null values
-        let whereClause = keys.map(key => {
-            if (conditions[key] === null) {
-                return `${key} IS NULL`;
-            } else {
-                values.push(conditions[key]);
-                return `${key} = ?`;
-            }
-        }).join(' AND ');
+        // Handle if conditions is a raw SQL string
+        if (typeof conditions === 'string') {
+            whereClause = conditions;
+        }
+        // Handle if conditions is an object
+        else if (typeof conditions === 'object' && Object.keys(conditions).length > 0) {
+            let keys = Object.keys(conditions);
+            whereClause = keys.map(key => {
+                if (conditions[key] === null) {
+                    return `${key} IS NULL`;
+                } else {
+                    values.push(conditions[key]);
+                    return `${key} = ?`;
+                }
+            }).join(' AND ');
+        } else {
+            // No condition passed
+            return reject(new Error("Invalid or empty condition provided"));
+        }
 
         let sql = `SELECT * FROM ?? WHERE ${whereClause}`;
         
@@ -115,6 +125,7 @@ module.exports.getDataByConditionsOrderBy = async function (tableName, condition
         });
     });
 };
+
 
 // let insertData = { name: 'John Doe', email: 'john@example.com' };
 // let resultData = await queryService.insertData('users', insertData);

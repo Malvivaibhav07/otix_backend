@@ -3,7 +3,6 @@ const dotenv = require('dotenv');
 dotenv.config();
 const con = require('../config/db');
 const configvar = require('../config/configvar');
-const prefix = configvar['dbprefix'];
 
 
 module.exports.getLang = function (req) {
