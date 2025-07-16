@@ -57,6 +57,7 @@ module.exports.login = async function (req, res) {
                     email: resultData[0].email,
                     is_email_verified: resultData[0].is_email_verified,
                     status: resultData[0].status,
+                    role:resultData[0].role,
                     
                 };
                 console.log(userInfo);

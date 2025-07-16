@@ -54,6 +54,7 @@ module.exports.login = async function (req, res) {
                     first_name: resultData[0].first_name,
                     last_name: resultData[0].last_name,
                     email: resultData[0].email,
+                    role: 'Admin',
                                         
                 };
                 console.log(adminInfo);

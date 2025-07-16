@@ -18,7 +18,7 @@ function auth(req, res, next) {
         });
     } else {
         const token = accessToken.toString().split(' ')[1];
-        jwt.verify(token, process.env.APP_USER_ACCESS_TOKEN_SECRET, (err, user) => {
+        jwt.verify(token, process.env.APP_USER_ACCESS_TOKEN_SECRET, (err, decoded) => {
             console.log(token)
             if (err) {
                 return res.json({
@@ -27,7 +27,9 @@ function auth(req, res, next) {
                     message: allLang[lang].access_token_not_match
                 });
             }
-            console.log('validate')
+            req.user = decoded;
+
+            console.log('User Token validated:', decoded);
             next();
         });
     }
