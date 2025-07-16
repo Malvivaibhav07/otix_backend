@@ -6,6 +6,7 @@ const allLang = require('../../languages/allLang');
 const { queryService} = require('../../services');
 const orderValidation = require('../../validations/admin/order.validation')
 // const pdfService = require('../services/pdfService'); //for PDF generation
+const pdfService = require('../../services/pdf.service');
 
 module.exports.createSalesOrder = async function (req, res) {
   const lang = common.getLang(req);
@@ -100,6 +101,12 @@ module.exports.createSalesOrder = async function (req, res) {
     // Generate PDF (optional)
     // const pdfBuffer = await pdfService.generateSalesOrderPDF(order_id); // Optional
     // const pdfBase64 = pdfBuffer?.toString("base64");
+     if (orderData.bill_type === 'weight_bill') {
+        await pdfService.generateWeightBillPDF(body, res);
+        } else {
+        await pdfService.generateFullBillPDF(body, res);
+        }
+
 
     return res.status(200).json({
       code: 200,

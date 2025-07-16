@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tax Invoice - Khodal Steel Products</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+            line-height: 1.2;
+            background-color: #f5f5f5;
+            padding: 20px;
+        }
+
+        .invoice-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            border: 2px solid #000;
+            padding: 0;
+        }
+
+        .header {
+            text-align: center;
+            border-bottom: 1px solid #000;
+            padding: 10px;
+            position: relative;
+        }
+
+        .header h1 {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .header .original {
+            font-size: 10px;
+            margin-bottom: 10px;
+        }
+
+        .qr-section {
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            text-align: center;
+        }
+
+        .qr-code {
+            width: 80px;
+            height: 80px;
+            border: 1px solid #000;
+            background-color: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 8px;
+            margin-bottom: 5px;
+        }
+
+        .irn-section {
+            padding: 10px;
+            border-bottom: 1px solid #000;
+            font-size: 10px;
+        }
+
+        .company-details {
+            display: flex;
+            border-bottom: 1px solid #000;
+        }
+
+        .seller-details, .buyer-details {
+            flex: 1;
+            padding: 10px;
+            border-right: 1px solid #000;
+        }
+
+        .buyer-details {
+            border-right: none;
+        }
+
+        .info-row {
+            display: flex;
+            margin-bottom: 3px;
+        }
+
+        .info-label {
+            width: 120px;
+            font-weight: bold;
+        }
+
+        .items-table {
+            width: 100%;
+            border-collapse: collapse;
+            border-bottom: 1px solid #000;
+        }
+
+        .items-table th,
+        .items-table td {
+            border: 1px solid #000;
+            padding: 5px;
+            text-align: left;
+        }
+
+        .items-table th {
+            background-color: #f0f0f0;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        .right {
+            text-align: right;
+        }
+
+        .product-info-section {
+            padding: 10px;
+            border-bottom: 1px solid #000;
+        }
+
+        .product-info-section h3 {
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .total-section {
+            padding: 10px;
+            border-bottom: 1px solid #000;
+            background-color: #f9f9f9;
+        }
+
+        .amount-words {
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .tax-breakdown {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        .tax-breakdown th,
+        .tax-breakdown td {
+            border: 1px solid #000;
+            padding: 3px;
+            text-align: center;
+            font-size: 10px;
+        }
+
+        .bank-details {
+            padding: 10px;
+            border-bottom: 1px solid #000;
+        }
+
+        .declaration {
+            padding: 10px;
+            border-bottom: 1px solid #000;
+            font-size: 10px;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 10px;
+            font-size: 10px;
+            font-weight: bold;
+        }
+
+        .bold {
+            font-weight: bold;
+        }
+
+        @media print {
+            body {
+                background-color: white;
+                padding: 0;
+                margin: 0;
+            }
+            
+            .invoice-container {
+                max-width: 100%;
+                border: none;
+            }
+            
+            @page {
+                size: A4;
+                margin: 10mm;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="invoice-container">
+        <!-- Header -->
+        <div class="header">
+            <h1>Tax Invoice</h1>
+            <div class="original">(ORIGINAL FOR RECIPIENT)</div>
+            <div class="qr-section">
+                <div>e-Invoice</div>
+                <div class="qr-code">QR CODE</div>
+            </div>
+        </div>
+
+        <!-- IRN and Invoice Details -->
+        <div class="irn-section">
+            <div><strong>IRN:</strong> 8b3e876cd228d811356e1e84e52881ae1de8bf9d49142-37bb420e67c247b47b3</div>
+            <div><strong>Ack No.:</strong> 112220240528236</div>
+            <div><strong>Ack Date:</strong> 28-05-2024</div>
+        </div>
+
+        <!-- Company Details -->
+        <div class="company-details">
+            <div class="seller-details">
+                <div class="bold">{{company_name}}</div>
+                <!-- <div>PLOT NO.3412, NR. MAYAVIR CIRCLE,</div> -->
+                <div>{{address}}</div>
+                <div><strong>GSTIN/UIN:</strong> {{GST_no}}</div>
+                <div><strong>State Name:</strong> {{state}}</div>
+                <div><strong>Contact:</strong> {{cust_phone}}</div>
+                <br>
+                <div class="bold">Otix International [ Vijay Bhai ]</div>
+                <div>PLOT NO.3112-3113, GIDC, PHASE-3, NEAR</div>
+                <div>SMI CIRCLE, DAREDI, Jamnagar, Gujarat, 361004</div>
+                <div><strong>GSTIN/UIN:</strong> 24BLKPB9540A1ZI</div>
+                <div><strong>State Name:</strong> Gujarat, Code: 24</div>
+                <div><strong>Place of Supply:</strong> Gujarat</div>
+            </div>
+            <div class="buyer-details">
+                <div class="info-row">
+                    <div class="info-label">Invoice No.:</div>
+                    <div>{{invoice_no}}</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">Dated:</div>
+                    <div>{{invoice_date}}</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">Mode/Terms of Payment:</div>
+                    <div>{{payment_terms}}</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">Reference No. & Date:</div>
+                    <div>Other References</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">Buyer's Order No.:</div>
+                    <div>Dated</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">Dispatch Doc No.:</div>
+                    <div>Delivery Note Date</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">Dispatched through:</div>
+                    <div>Destination</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">Bill of Lading/LR-RR No.:</div>
+                    <div>{{city}}</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">Motor Vehicle No.:</div>
+                    <div>GJ 10 TV 7757</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">Terms of Delivery:</div>
+                    <div>{{terms_conditions}}</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Items Table -->
+        <table class="items-table">
+            <thead>
+                <tr>
+                    <th>Sr No</th>
+                    <th>Description</th>
+                    <th>HSN/SAC</th>
+                    <th>Quantity</th>
+                    <th>Rate</th>
+                    <th>Per</th>
+                    <th>Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+            {{#each items}}
+                <tr>
+                <td class="center">{{items_id}}</td>
+                <td>{{product_description}}</td>
+                <td class="center">{{hsn_code}}</td>
+                <td class="right">{{quantity}} {{unit}}</td>
+                <td class="right">₹ {{rate}}</td>
+                <td class="center">{{unit}}</td>
+                <td class="right">₹ {{amount}}</td>
+                </tr>
+            {{/each}}
+
+            <tr>
+                <td colspan="4"></td>
+                <td></td>
+                <td class="right">S GST {{gst_percent}}%</td>
+                <td class="right">₹ {{gst_amount}}</td>
+            </tr>
+            <tr>
+                <td colspan="4"></td>
+                <td></td>
+                <td class="right">C GST {{gst_percent}}%</td>
+                <td class="right">₹ {{gst_amount}}</td>
+            </tr>
+            <tr>
+                <td colspan="4"></td>
+                <td></td>
+                <td class="right">Round Off</td>
+                <td class="right">₹ {{round_off}}</td>
+            </tr>
+            <tr>
+                <td colspan="4" class="bold">Total</td>
+                <td></td>
+                <td></td>
+                <td class="right bold">₹ {{final_amount}}</td>
+            </tr>
+            </tbody>
+
+        </table>
+
+        <!-- Product Information Section -->
+        <div class="product-info-section">
+            <h3>Product Information</h3>
+            <table class="items-table">
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Item Finish</th>
+                        <th>PCS/BOX</th>
+                        <th>Total Box</th>
+                        <th>Extra PCS</th>
+                        <th>Total PCS</th>
+                        <th>Total Weight</th>
+                        <th>Scrap + LB</th>
+                        <th>Total RS</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{product_name}}</td>
+                        <td>{{finishing_name}}</td>
+                        <td class="center">{{pieces_per_box}}</td>
+                        <td class="center">{{quantity}}</td>
+                        <td class="center">0</td>
+                        <td class="center">{{multiply quantity pieces_per_box}}</td>
+                        <td class="right">{{multiply box_weight quantity}} kg</td>
+                        <td class="right">{{labour_charge}}</td>
+                        <td class="right">₹ {{total_amount}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Amount in Words -->
+        <div class="total-section">
+            <div class="amount-words">Amount Chargeable (in words)</div>
+            <div class="bold">INR Four Lakh Ninety Five Thousand Seven Hundred Seventy Only</div>
+            <div style="text-align: right; margin-top: 10px;">E. & O.E</div>
+        </div>
+
+        <!-- Tax Breakdown -->
+        <table class="tax-breakdown">
+            <thead>
+                <tr>
+                    <th>HSN/SAC</th>
+                    <th>Taxable Value</th>
+                    <th>Central Tax</th>
+                    <th>State Tax</th>
+                    <th>Total Tax Amount</th>
+                </tr>
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th>Rate | Amount</th>
+                    <th>Rate | Amount</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>83021010</td>
+                    <td>4,20,144.00</td>
+                    <td>9% | 37,812.96</td>
+                    <td>9% | 37,812.96</td>
+                    <td>75,625.92</td>
+                </tr>
+                <tr>
+                    <td><strong>Total</strong></td>
+                    <td><strong>4,20,144.00</strong></td>
+                    <td><strong>37,812.96</strong></td>
+                    <td><strong>37,812.96</strong></td>
+                    <td><strong>75,625.92</strong></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Tax Amount in Words -->
+        <div style="padding: 10px; border-bottom: 1px solid #000;">
+            <div class="bold">Tax Amount (in words): INR Seventy Five Thousand Six Hundred Twenty Five and Ninety Two paise Only</div>
+        </div>
+
+        <!-- Bank Details -->
+        <div class="bank-details">
+            <div class="bold">Company's Bank Details</div>
+            <div><strong>Bank Name:</strong> HDFC BANK A/C.50200080083191</div>
+            <div><strong>A/C No.:</strong> 50200080083191</div>
+            <div><strong>Branch & IFS Code:</strong> Daredi Branch & HDFC0002374</div>
+            <div style="text-align: right; margin-top: 10px;">for Khodal Steel Products</div>
+            <div style="text-align: right; margin-top: 20px;">Authorised Signatory</div>
+        </div>
+
+        <!-- Declaration -->
+        <div class="declaration">
+            <div class="bold">Declaration</div>
+            <div>We declare that this invoice shows the actual price of the goods described and that all particulars are true and correct.</div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            This is a Computer Generated Invoice
+        </div>
+    </div>
+</body>
+</html>
