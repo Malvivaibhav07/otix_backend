@@ -40,19 +40,7 @@ module.exports.userAdd = async function (req) {
         
                 };
             }
-            else if (bodyData.password.toString().length < 8) {
-                    return {
-                        code: configvar.error_code,
-                        status: configvar.error_status,
-                        message: allLang[lang].password_too_short
-                    };
-                } else if (bodyData.password.toString().length > 20) {
-                    return {
-                        code: configvar.error_code,
-                        status: configvar.error_status,
-                        message: allLang[lang].password_too_long
-                    };
-                }
+           
         return {
             code: configvar.success_code || 200,
             status: configvar.success_status || "success",
